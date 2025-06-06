@@ -4,8 +4,8 @@
 #include <FirebaseClient.h>
 
 // Network and Firebase credentials
-#define WIFI_SSID "MECA-IoT"
-#define WIFI_PASSWORD "IoT$2025"
+#define WIFI_SSID "TeleCentro-78e2"
+#define WIFI_PASSWORD "EZM2MGYMGZMN"
 
 #define Web_API_KEY "AIzaSyDAnnvZuAYprAMWRATCGcE48O83QIy5s08 "
 #define DATABASE_URL "https://compost--app-default-rtdb.firebaseio.com/"
