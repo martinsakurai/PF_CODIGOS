@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "compostapp-462805",
+  "private_key_id": "55e01d6ef3725e9d5a7b3bc53b336b67c92c6522",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC32Ec9oYX6zR0V\nZ05T9IxFJhbQPn3V1ZjCcuZFxAwaSICK9+liLoLAEGXiRwgp6VLrU4nfIzUKJI1s\nmJVtDs3xwOIj8YkMlv5/pMyela/OLj+mdRtkeAPzg3W7evH7dQcJBr+q/bdduBlm\nzA8Wlt5HvZD6EU1mBC+bXzUUnItnRrqSBa5bbgcm/eF1K6mgKwi5MMsUZ5+98Y4y\ngvWIcai7AXCY7pwp8Fk2bmdSzeHWL3beIKRW5PD5MW9O1zq4YulgmzpS4i26sOyh\nJcbjEeyKeSvYB5uJQ+gG3nRykdQVPPQeAkq3KJGSv52BSUUT7kK0syd9dEk0JnFL\nSK5QbLrPAgMBAAECggEABpyjq0bE38lCs4NcoM5ZwR7mkSS+N9OPw+aH+5haaxOS\nc+0ImrxbfXbZgzLUy1UV41rEyZ6liLDZ2T7/mMWAiKJMP8ivCiHgE00lAssVYI/v\nQBhUHN/oHHjs4gpA669AyoVQnWC0mI1HdJgALurMIb5imWvH4dRite7NpOkgZl1o\nOMnuJto2U4TCSVx2HMbBX8MxyE/knygWpomb896Thiieo8pl3l1doqH+9qB3OWDi\nZ9xX+FF3LKTTA/8lB/SLNDo209yDUkZg9iW4IjZ8FjSP/bmttQg2f6twD8cdRQMb\na26w3issVzhyGcTMBvaGQDoXthRIYTv0Y+HHOgyxiQKBgQDhKQZuEn6SQYPTBR6R\n5rrNWoyp70o3L+HHkIGp3wMK3d9A1zFRUJx3SktUTFgHnFwtN2wuNB1jZrEcMG3W\n/W+8caEjkUNndhzVwUPToWyRz3xr7hOiSG1gqVrw/RGKbp4ZY9hmn80istZE/d+D\nriNWzbBPS/SN4bs+4rNNdnKtFQKBgQDRBpPW9EleVY5Hjg48aNy4N83+qOWyg8Zf\n7Qc3TJ6UqResSnqIWXcSsIx48eLOnwpgtGrXKeaQDvi0WLghdzjHZ9E+m+UG6lqb\nisPVgQIviUfjZiIWSMaBS7VJi4fG3hSm+A+S+Qy+ArDVEZkh+vdt8FCCXuZSIPay\nQ2txKX1pUwKBgECOKJ/KgauhSRBpeVhPlONnwMjAKMEl40/6aJKxtAebkXTfve4Y\ndKPnEy36LYsRE4SLTWL54isruD/iyrtHMpAO7CpsbazuOlo27SFyONSdbojrW4m9\nxk5egAp0JGFSUdXpwJO74W6/Y5uoRjtU5CDxHEm/9z/upmbjTJE7Eqn5AoGBAIGb\n333w+bFpwZBy8DbbGsmLqMqYdd1MQmxmsAvFEavCcbBeej4jo2bOXDv+WJGgIjI2\njO0fyRxYfDRvsrTllSpoIGH/DnNMS6SY1beEiBNrv0ysnsRMmfHAPQf+YdGZERs7\nQ4Txssn7JyTnBZoBYP0lfvZn287fK7j7fxqrDF2LAoGBAIi/hwfrSY72odlaKWFj\nwhqjBEdQ+Ocp6Umz7baayO/B96ujuQ4AL7a6m/QJBIt3uA8LZNoiIAmbr2KystRx\nuUIK1P+k8tYVWx/lKxLNN4YDyBZtYLI+EOL+jSadBOlhjK7t48+C3tGnkBnq38/D\n3zxcFZE4B2VMX/TCAjoG16yZ\n-----END PRIVATE KEY-----\n",
+  "client_email": "cliente-esp32@compostapp-462805.iam.gserviceaccount.com",
+  "client_id": "101923323616109723591",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cliente-esp32%40compostapp-462805.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
