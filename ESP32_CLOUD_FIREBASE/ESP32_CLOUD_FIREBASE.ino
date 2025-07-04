@@ -1,45 +1,51 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* ssid = "TeleCentro-78e2"; //guardo id y contraseña en dos variables
+// ✅ Tus credenciales WiFi
+const char* ssid = "TeleCentro-78e2";
 const char* password = "EZM2MGYMGZMN";
 
-// URL de tu Firestore (ajustá con tu proyecto)
-const char* FIREBASE_HOST = "https://firestore.googleapis.com/v1/projects/compostapp-462805/databases/default/documents/sensores"; // defino la URL, creo una coleccion en la cual se van a subir estos datos random
+// ✅ URL de tu servidor Node.js (ajusta IP/puerto)
+const char* serverUrl = "https://servidor-compostera.onrender.com/lectura"; // CAMBIA por tu IP local o dominio
 
 void setup() {
   Serial.begin(115200);
-  WiFi.begin(ssid, password); // me conecto a wifi
+  WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("WiFi conectado.");
+  Serial.println("\nWiFi conectado.");
+}
 
+void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-
-    http.begin(FIREBASE_HOST);  // comienzo una solicitud HTTP usando la URL que defini antes del FireStore
+    http.begin(serverUrl);
     http.addHeader("Content-Type", "application/json");
 
-    // este es un documento tipo JSON donde los campos "temperatura", "humedad" y "ph" son de tipo "double"
+    // ✅ Datos de ejemplo — aquí pondrás los valores reales de tus sensores
     String json = R"(
       {
-        "fields": {
-          "temperatura": { "doubleValue": 30.5 },
-          "humedad": { "doubleValue": 60 },
-          "ph": { "doubleValue": 7.2 }
-        }
+        "temperatura": 30.5,
+        "humedad": 60,
+        "ph": 7.2
       }
     )";
 
-    int httpResponseCode = http.POST(json); //envio la peticion con el json al servidor
-    Serial.print("Código de respuesta: "); // muestra el codigo de respuesta. lo ideal es que sea 200 o 201, pero si tira -1 o 401 es que hay algo mal
+    int httpResponseCode = http.POST(json);
+
+    Serial.print("Código de respuesta: ");
     Serial.println(httpResponseCode);
 
-    http.end(); //finalizo la conexion
-  }
-}
+    String payload = http.getString();
+    Serial.println(payload);
 
-void loop() {}
+    http.end();
+  } else {
+    Serial.println("WiFi desconectado");
+  }
+
+  delay(10000); // Espera 10 segundos
+}
