@@ -1,100 +1,59 @@
-#include <Arduino.h>
 #include <WiFi.h>
-#include <WiFiClientSecure.h>
-#include <FirebaseClient.h>
+#include <HTTPClient.h>
 
-// Network and Firebase credentials
-#define WIFI_SSID "TeleCentro-78e2"
-#define WIFI_PASSWORD "EZM2MGYMGZMN"
+// ✅ Tus credenciales WiFi
+const char* ssid = "MECA-IoT";
+const char* password = "IoT$2025";
 
-#define Web_API_KEY "AIzaSyDAnnvZuAYprAMWRATCGcE48O83QIy5s08 "
-#define DATABASE_URL "https://compost--app-default-rtdb.firebaseio.com/"
-#define USER_EMAIL "martin.sakurai7@gmail.com"
-#define USER_PASS "MarSaku07"
+// ✅ URL de tu servidor Node.js (ajusta IP/puerto)
+const char* serverUrl = "https://servidor-compostera.onrender.com/lectura"; // CAMBIA por tu IP local o dominio
+const int pinFc28 = 32;
+int lecturaFC28;
+float humedadSuelo;
 
-// User function
-void processData(AsyncResult &aResult);
-
-// Authentication
-UserAuth user_auth(Web_API_KEY, USER_EMAIL, USER_PASS);
-
-// Firebase components
-FirebaseApp app;
-WiFiClientSecure ssl_client;
-using AsyncClient = AsyncClientClass;
-AsyncClient aClient(ssl_client);
-RealtimeDatabase Database;
-
-// Timer variables for sending data every 10 seconds
-unsigned long lastSendTime = 0;
-const unsigned long sendInterval = 10000; // 10 seconds in milliseconds
-
-// Variables to send to the database
-int intValue = 0;
-float floatValue = 0.01;
-String stringValue = "";
-
-void setup(){
+void setup() {
   Serial.begin(115200);
+  WiFi.begin(ssid, password);
 
-  // Connect to Wi-Fi
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("Connecting to Wi-Fi");
+  pinMode(pinFc28, INPUT);
+
   while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
     Serial.print(".");
-    delay(300);
   }
-  Serial.println();
-  
-  // Configure SSL client
-  ssl_client.setInsecure();
-  ssl_client.setConnectionTimeout(1000);
-  ssl_client.setHandshakeTimeout(5);
-  
-  // Initialize Firebase
-  initializeApp(aClient, app, getAuth(user_auth), processData, "🔐 authTask");
-  app.getApp<RealtimeDatabase>(Database);
-  Database.url(DATABASE_URL);
+  Serial.println("\nWiFi conectado.");
 }
 
-void loop(){
-  // Maintain authentication and async tasks
-  app.loop();
-  // Check if authentication is ready
-  if (app.ready()){ 
-    // Periodic data sending every 10 seconds
-    unsigned long currentTime = millis();
-    if (currentTime - lastSendTime >= sendInterval){
-      // Update the last send time
-      lastSendTime = currentTime;
-      
-      // send a string
-      stringValue = "value_" + String(currentTime);
-      Database.set<String>(aClient, "/test/string", stringValue, processData, "RTDB_Send_String");
-      // send an int
-      Database.set<int>(aClient, "/test/int", intValue, processData, "RTDB_Send_Int");
-      intValue++; //increment intValue in every loop
+void loop() {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin(serverUrl);
+    http.addHeader("Content-Type", "application/json");
 
-      // send a string
-      floatValue = 0.01 + random (0,100);
-      Database.set<float>(aClient, "/test/float", floatValue, processData, "RTDB_Send_Float");
-    }
+    lecturaFC28 = analogRead(pinFc28);
+    humedadSuelo = map(lecturaFC28, 0, 4095, 100, 0);
+
+    // ✅ Datos de ejemplo — aquí pondrás los valores reales de tus sensores
+    String json = 
+      R"({
+        "temperatura": 30.5,
+        "humedad": 60,
+        "ph": 7.2,
+        "humedadSuelo": )" + String(humedadSuelo) + R"(
+      })";
+
+    int httpResponseCode = http.POST(json);
+
+    Serial.print("Código de respuesta: ");
+    Serial.println(httpResponseCode);
+
+    String payload = http.getString();
+    Serial.println(payload);
+
+    http.end();
+  } else {
+    Serial.println("WiFi desconectado");
   }
-}
 
-void processData(AsyncResult &aResult) {
-  if (!aResult.isResult())
-    return;
-
-  if (aResult.isEvent())
-    Firebase.printf("Event task: %s, msg: %s, code: %d\n", aResult.uid().c_str(), aResult.eventLog().message().c_str(), aResult.eventLog().code());
-
-  if (aResult.isDebug())
-    Firebase.printf("Debug task: %s, msg: %s\n", aResult.uid().c_str(), aResult.debug().c_str());
-
-  if (aResult.isError())
-    Firebase.printf("Error task: %s, msg: %s, code: %d\n", aResult.uid().c_str(), aResult.error().message().c_str(), aResult.error().code());
-
-  if (aResult.available())
-    Firebase.printf("task: %s, payload: %s\n", aResult.uid().c_str(), aResult.c_str());
+  delay(10000); // Espera 10 segundos
 }
